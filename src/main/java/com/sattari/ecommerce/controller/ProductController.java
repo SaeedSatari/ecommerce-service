@@ -11,7 +11,7 @@ import java.util.List;
  * @author Saeed Sattari
  */
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @CrossOrigin
 public class ProductController {
 
@@ -22,12 +22,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getProducts() throws NotFoundException {
+    public List<ProductResponse> getProductsDetails() throws NotFoundException {
         return productService.fetchProductsDetails();
     }
 
     @GetMapping("/{productId}")
-    public ProductResponse getProduct(@PathVariable String productId) throws Exception {
+    public ProductResponse getProductDetails(@PathVariable String productId) throws Exception {
         return productService.fetchProductDetails(productId);
     }
 }
