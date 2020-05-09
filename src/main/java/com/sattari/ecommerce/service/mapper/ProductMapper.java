@@ -1,7 +1,9 @@
 package com.sattari.ecommerce.service.mapper;
 
+import com.sattari.ecommerce.controller.response.ProductCategoryResponse;
 import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.dal.entity.Product;
+import com.sattari.ecommerce.dal.entity.ProductCategory;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,4 +20,7 @@ public interface ProductMapper {
     @Mapping(target = "description", source = "source.description")
     @Mapping(target = "unitPrice", source = "source.unitPrice")
     ProductResponse productToProductResponse(Product source);
+
+    @Mapping(target = "categoryName", source = "source.categoryName")
+    ProductCategoryResponse productCategoryToProductCategoryResponse(ProductCategory source);
 }

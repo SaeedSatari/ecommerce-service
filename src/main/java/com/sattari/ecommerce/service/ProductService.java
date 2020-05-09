@@ -8,9 +8,9 @@ import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Saeed Sattari
@@ -20,9 +20,11 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductCategoryService productCategoryService;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ProductCategoryService productCategoryService) {
         this.productRepository = productRepository;
+        this.productCategoryService = productCategoryService;
     }
 
     public List<ProductResponse> fetchProductsDetails() throws NotFoundException {
@@ -30,16 +32,36 @@ public class ProductService {
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
         } else {
-            return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
+            return mapProductResponses(fetchedProducts);
         }
+    }
+
+    private List<ProductResponse> mapProductResponses(List<Product> fetchedProducts) throws NotFoundException {
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : fetchedProducts) {
+            ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(product);
+            productResponse.setCategoryName(getCategoryName(product.getCategory().getId()));
+            productResponses.add(productResponse);
+        }
+        return productResponses;
+    }
+
+    public String getCategoryName(Long catalogId) throws NotFoundException {
+        return productCategoryService.fetchProductCategory(String.valueOf(catalogId)).getCategoryName();
     }
 
     public ProductResponse fetchProductDetails(String productId) throws Exception {
         Optional<Product> optionalProduct = productRepository.findById(Long.valueOf(productId));
         if (optionalProduct.isPresent()) {
-            return ProductMapper.MAPPER.productToProductResponse(optionalProduct.get());
+            return mapProductResponse(optionalProduct.get());
         } else {
             throw new NotFoundException("Nothing found for " + productId + " id!");
         }
+    }
+
+    private ProductResponse mapProductResponse(Product optionalProduct) throws NotFoundException {
+        ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(optionalProduct);
+        productResponse.setCategoryName(getCategoryName(optionalProduct.getCategory().getId()));
+        return productResponse;
     }
 }
