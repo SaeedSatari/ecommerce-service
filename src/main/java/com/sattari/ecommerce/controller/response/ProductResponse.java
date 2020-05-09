@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Saeed Sattari
+ */
 @Getter
 @Setter
 public class ProductResponse {

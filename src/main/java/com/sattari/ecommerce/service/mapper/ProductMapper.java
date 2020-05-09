@@ -1,0 +1,21 @@
+package com.sattari.ecommerce.service.mapper;
+
+import com.sattari.ecommerce.controller.response.ProductResponse;
+import com.sattari.ecommerce.dal.entity.Product;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+/**
+ * @author Saeed Sattari
+ */
+@Mapper(componentModel = "spring")
+public interface ProductMapper {
+    ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
+
+    @Mapping(target = "sku", source = "source.sku")
+    @Mapping(target = "name", source = "source.name")
+    @Mapping(target = "description", source = "source.description")
+    @Mapping(target = "unitPrice", source = "source.unitPrice")
+    ProductResponse productToProductResponse(Product source);
+}
