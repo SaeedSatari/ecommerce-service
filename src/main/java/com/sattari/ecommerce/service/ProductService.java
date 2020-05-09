@@ -32,11 +32,11 @@ public class ProductService {
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
         } else {
-            return mapProductResponses(fetchedProducts);
+            return mapToProductResponses(fetchedProducts);
         }
     }
 
-    private List<ProductResponse> mapProductResponses(List<Product> fetchedProducts) throws NotFoundException {
+    private List<ProductResponse> mapToProductResponses(List<Product> fetchedProducts) throws NotFoundException {
         List<ProductResponse> productResponses = new ArrayList<>();
         for (Product product : fetchedProducts) {
             ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(product);
@@ -53,15 +53,15 @@ public class ProductService {
     public ProductResponse fetchProductDetails(String productId) throws Exception {
         Optional<Product> optionalProduct = productRepository.findById(Long.valueOf(productId));
         if (optionalProduct.isPresent()) {
-            return mapProductResponse(optionalProduct.get());
+            return mapToProductResponse(optionalProduct.get());
         } else {
             throw new NotFoundException("Nothing found for " + productId + " id!");
         }
     }
 
-    private ProductResponse mapProductResponse(Product optionalProduct) throws NotFoundException {
-        ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(optionalProduct);
-        productResponse.setCategoryName(getCategoryName(optionalProduct.getCategory().getId()));
+    private ProductResponse mapToProductResponse(Product product) throws NotFoundException {
+        ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(product);
+        productResponse.setCategoryName(getCategoryName(product.getCategory().getId()));
         return productResponse;
     }
 }
