@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductResponse getProductDetails(@PathVariable String productId) throws Exception {
+    public ProductResponse getProductDetails(@PathVariable String productId) throws NotFoundException {
         return productService.fetchProductDetails(productId);
     }
 }

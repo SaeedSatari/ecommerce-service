@@ -50,7 +50,7 @@ public class ProductService {
         return productCategoryService.fetchProductCategory(String.valueOf(catalogId)).getCategoryName();
     }
 
-    public ProductResponse fetchProductDetails(String productId) throws Exception {
+    public ProductResponse fetchProductDetails(String productId) throws NotFoundException {
         Optional<Product> optionalProduct = productRepository.findById(Long.valueOf(productId));
         if (optionalProduct.isPresent()) {
             return mapToProductResponse(optionalProduct.get());
