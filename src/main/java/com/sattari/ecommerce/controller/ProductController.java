@@ -1,11 +1,10 @@
 package com.sattari.ecommerce.controller;
 
-import com.sattari.ecommerce.dal.entity.Product;
+import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Saeed Sattari
@@ -24,12 +23,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts() {
+    public List<ProductResponse> getProducts() {
         return productService.getProducts();
     }
 
     @GetMapping("/{productId}")
-    public Optional<Product> getProduct(@PathVariable String productId) {
+    public ProductResponse getProduct(@PathVariable String productId) throws Exception {
         return productService.getProductById(productId);
     }
 }
