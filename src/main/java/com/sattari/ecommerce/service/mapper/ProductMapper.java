@@ -23,6 +23,7 @@ public interface ProductMapper {
     @Mapping(target = "imageUrl", source = "source.imageUrl")
     ProductResponse productToProductResponse(Product source);
 
+    @Mapping(target = "id", source = "source.id")
     @Mapping(target = "categoryName", source = "source.categoryName")
     ProductCategoryResponse productCategoryToProductCategoryResponse(ProductCategory source);
 }

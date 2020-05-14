@@ -9,5 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductCategoryResponse {
+    private Long id;
     private String categoryName;
 }
