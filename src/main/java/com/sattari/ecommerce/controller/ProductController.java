@@ -30,4 +30,9 @@ public class ProductController {
     public ProductResponse getProductDetails(@PathVariable String productId) throws NotFoundException {
         return productService.fetchProductDetails(productId);
     }
+
+    @GetMapping("/search/categoryId")
+    public List<ProductResponse> getProductsByCategoryId(@RequestParam String id) throws NotFoundException {
+        return productService.fetchProductsDetailsByCategoryId(id);
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Saeed Sattari
@@ -63,5 +64,14 @@ public class ProductService {
         ProductResponse productResponse = ProductMapper.MAPPER.productToProductResponse(product);
         productResponse.setCategoryName(getCategoryName(product.getCategory().getId()));
         return productResponse;
+    }
+
+    public List<ProductResponse> fetchProductsDetailsByCategoryId(String categoryId) throws NotFoundException {
+        List<Product> fetchedProducts = productRepository.findByCategoryId(Long.valueOf(categoryId));
+        if (fetchedProducts.isEmpty()) {
+            throw new NotFoundException("Nothing founds!");
+        } else {
+            return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
+        }
     }
 }
