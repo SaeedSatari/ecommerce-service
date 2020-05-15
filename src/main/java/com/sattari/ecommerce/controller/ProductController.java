@@ -23,16 +23,21 @@ public class ProductController {
 
     @GetMapping
     public List<ProductResponse> getProductsDetails() throws NotFoundException {
-        return productService.fetchProductsDetails();
+        return productService.fetchProductList();
     }
 
     @GetMapping("/{productId}")
     public ProductResponse getProductDetails(@PathVariable String productId) throws NotFoundException {
-        return productService.fetchProductDetails(productId);
+        return productService.fetchProduct(productId);
     }
 
     @GetMapping("/search/categoryId")
-    public List<ProductResponse> getProductsByCategoryId(@RequestParam String id) throws NotFoundException {
-        return productService.fetchProductsDetailsByCategoryId(id);
+    public List<ProductResponse> searchByCategoryId(@RequestParam String id) throws NotFoundException {
+        return productService.findByCategoryId(id);
+    }
+
+    @GetMapping("/search/keyword")
+    public List<ProductResponse> searchByKeyword(@RequestParam("name") String name) throws NotFoundException {
+        return productService.findByKeyword(name);
     }
 }

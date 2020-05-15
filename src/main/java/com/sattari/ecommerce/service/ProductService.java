@@ -28,7 +28,7 @@ public class ProductService {
         this.productCategoryService = productCategoryService;
     }
 
-    public List<ProductResponse> fetchProductsDetails() throws NotFoundException {
+    public List<ProductResponse> fetchProductList() throws NotFoundException {
         List<Product> fetchedProducts = productRepository.findAll();
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
@@ -51,7 +51,7 @@ public class ProductService {
         return productCategoryService.fetchProductCategory(String.valueOf(catalogId)).getCategoryName();
     }
 
-    public ProductResponse fetchProductDetails(String productId) throws NotFoundException {
+    public ProductResponse fetchProduct(String productId) throws NotFoundException {
         Optional<Product> optionalProduct = productRepository.findById(Long.valueOf(productId));
         if (optionalProduct.isPresent()) {
             return mapToProductResponse(optionalProduct.get());
@@ -66,10 +66,19 @@ public class ProductService {
         return productResponse;
     }
 
-    public List<ProductResponse> fetchProductsDetailsByCategoryId(String categoryId) throws NotFoundException {
+    public List<ProductResponse> findByCategoryId(String categoryId) throws NotFoundException {
         List<Product> fetchedProducts = productRepository.findByCategoryId(Long.valueOf(categoryId));
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
+        } else {
+            return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
+        }
+    }
+
+    public List<ProductResponse> findByKeyword(String name) throws NotFoundException {
+        List<Product> fetchedProducts = productRepository.findByNameContaining(name);
+        if (fetchedProducts.isEmpty()) {
+            throw new NotFoundException("Nothing founds for " + name + " keyword!");
         } else {
             return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
         }
