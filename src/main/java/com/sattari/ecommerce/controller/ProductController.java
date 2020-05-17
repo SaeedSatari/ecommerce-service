@@ -1,6 +1,7 @@
 package com.sattari.ecommerce.controller;
 
 import com.sattari.ecommerce.controller.response.ProductResponse;
+import com.sattari.ecommerce.controller.response.PagedProductsResponse;
 import com.sattari.ecommerce.service.ProductService;
 import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getProductsDetails() throws NotFoundException {
-        return productService.fetchProductList();
+    public PagedProductsResponse getProductsDetails(@RequestParam int page,
+                                                    @RequestParam int size) throws NotFoundException {
+        return productService.getPagedProducts(page, size);
     }
 
     @GetMapping("/{productId}")

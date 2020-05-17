@@ -21,6 +21,7 @@ public interface ProductMapper {
     @Mapping(target = "unitPrice", source = "source.unitPrice")
     @Mapping(target = "unitsInStock", source = "source.unitsInStock")
     @Mapping(target = "imageUrl", source = "source.imageUrl")
+    @Mapping(target = "categoryName", source = "source.category.categoryName")
     ProductResponse productToProductResponse(Product source);
 
     @Mapping(target = "id", source = "source.id")
