@@ -38,10 +38,10 @@ public class ProductService {
         }
     }
 
-    public ProductResponse fetchProduct(String productId) throws NotFoundException {
+    public Product fetchProduct(String productId) throws NotFoundException {
         Optional<Product> optionalProduct = productRepository.findById(Long.valueOf(productId));
         if (optionalProduct.isPresent()) {
-            return ProductMapper.MAPPER.productToProductResponse(optionalProduct.get());
+            return optionalProduct.get();
         } else {
             throw new NotFoundException("Nothing found for " + productId + " id!");
         }

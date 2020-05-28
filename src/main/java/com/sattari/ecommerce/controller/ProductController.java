@@ -28,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public PagedProductsResponse getProductsDetails(@RequestParam int page,
-                                                    @RequestParam int size) throws NotFoundException {
+    public PagedProductsResponse getPagedProducts(@RequestParam int page,
+                                                  @RequestParam int size) throws NotFoundException {
         PagedProductsResponse response = new PagedProductsResponse();
         Page<Product> pagedProducts = productService.getPagedProducts(page, size);
         response.setPage(initiatePageResponse(pagedProducts));
@@ -48,7 +48,8 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public ProductResponse getProductDetails(@PathVariable String productId) throws NotFoundException {
-        return productService.fetchProduct(productId);
+        Product product = productService.fetchProduct(productId);
+        return ProductMapper.MAPPER.productToProductResponse(product);
     }
 
     @GetMapping("/search/categoryId")
