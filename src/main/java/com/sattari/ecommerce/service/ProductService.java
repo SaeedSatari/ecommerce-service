@@ -1,7 +1,5 @@
 package com.sattari.ecommerce.service;
 
-import com.sattari.ecommerce.controller.response.PageResponse;
-import com.sattari.ecommerce.controller.response.PagedProductsResponse;
 import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.dal.entity.Product;
 import com.sattari.ecommerce.dal.repository.ProductRepository;
@@ -30,12 +28,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public PagedProductsResponse getPagedProducts(int page, int size) throws NotFoundException {
-        Page<Product> pagedProducts = fetchPagedProducts(page, size);
-        return getPagedProductsResponse(pagedProducts);
-    }
-
-    private Page<Product> fetchPagedProducts(int page, int size) throws NotFoundException {
+    public Page<Product> getPagedProducts(int page, int size) throws NotFoundException {
         Pageable paging = PageRequest.of(page, size);
         Page<Product> fetchedProducts = productRepository.findAll(paging);
         if (fetchedProducts.isEmpty()) {
@@ -43,22 +36,6 @@ public class ProductService {
         } else {
             return fetchedProducts;
         }
-    }
-
-    private PagedProductsResponse getPagedProductsResponse(Page<Product> pagedProducts) {
-        PagedProductsResponse pagedProductsResponse = new PagedProductsResponse();
-        pagedProductsResponse.setPage(initiatePageResponse(pagedProducts));
-        pagedProductsResponse.setProducts(pagedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList()));
-        return pagedProductsResponse;
-    }
-
-    private PageResponse initiatePageResponse(Page<Product> pagedProducts) {
-        PageResponse pageResponse = new PageResponse();
-        pageResponse.setTotalPages(pagedProducts.getTotalPages());
-        pageResponse.setTotalElements(pagedProducts.getTotalElements());
-        pageResponse.setSize(pagedProducts.getSize());
-        pageResponse.setNumber(pagedProducts.getNumber());
-        return pageResponse;
     }
 
     public ProductResponse fetchProduct(String productId) throws NotFoundException {
