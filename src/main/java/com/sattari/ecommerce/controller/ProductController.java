@@ -8,6 +8,9 @@ import com.sattari.ecommerce.service.ProductService;
 import com.sattari.ecommerce.service.mapper.ProductMapper;
 import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +34,9 @@ public class ProductController {
     public PagedProductsResponse getPagedProducts(@RequestParam int page,
                                                   @RequestParam int size) throws NotFoundException {
         PagedProductsResponse response = new PagedProductsResponse();
-        Page<Product> pagedProducts = productService.getPagedProducts(page, size);
+        Pageable paging = PageRequest.of(page, size);
+        List<Product> products = productService.fetchProducts();
+        Page<Product> pagedProducts = new PageImpl<>(products, paging, products.size());
         response.setPage(initiatePageResponse(pagedProducts));
         response.setProducts(pagedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList()));
         return response;

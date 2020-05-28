@@ -3,9 +3,6 @@ package com.sattari.ecommerce.service;
 import com.sattari.ecommerce.dal.entity.Product;
 import com.sattari.ecommerce.dal.repository.ProductRepository;
 import javassist.NotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +22,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Page<Product> getPagedProducts(int page, int size) throws NotFoundException {
-        Pageable paging = PageRequest.of(page, size);
-        Page<Product> fetchedProducts = productRepository.findAll(paging);
+    public List<Product> fetchProducts() throws NotFoundException {
+        List<Product> fetchedProducts = productRepository.findAll();
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
         } else {
