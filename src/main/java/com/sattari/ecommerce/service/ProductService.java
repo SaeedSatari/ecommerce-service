@@ -1,9 +1,7 @@
 package com.sattari.ecommerce.service;
 
-import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.dal.entity.Product;
 import com.sattari.ecommerce.dal.repository.ProductRepository;
-import com.sattari.ecommerce.service.mapper.ProductMapper;
 import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Saeed Sattari
@@ -56,12 +53,12 @@ public class ProductService {
         }
     }
 
-    public List<ProductResponse> findByKeyword(String name) throws NotFoundException {
+    public List<Product> findByKeyword(String name) throws NotFoundException {
         List<Product> fetchedProducts = productRepository.findByNameContaining(name);
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds for " + name + " keyword!");
         } else {
-            return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
+            return fetchedProducts;
         }
     }
 }

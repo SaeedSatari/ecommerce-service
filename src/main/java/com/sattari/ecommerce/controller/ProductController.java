@@ -60,6 +60,7 @@ public class ProductController {
 
     @GetMapping("/search/keyword")
     public List<ProductResponse> searchByKeyword(@RequestParam("name") String name) throws NotFoundException {
-        return productService.findByKeyword(name);
+        List<Product> products = productService.findByKeyword(name);
+        return products.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
     }
 }
