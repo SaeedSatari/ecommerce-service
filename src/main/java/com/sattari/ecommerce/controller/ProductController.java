@@ -54,7 +54,8 @@ public class ProductController {
 
     @GetMapping("/search/categoryId")
     public List<ProductResponse> searchByCategoryId(@RequestParam String id) throws NotFoundException {
-        return productService.findByCategoryId(id);
+        List<Product> products = productService.findByCategoryId(id);
+        return products.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
     }
 
     @GetMapping("/search/keyword")

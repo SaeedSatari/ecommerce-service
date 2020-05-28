@@ -47,12 +47,12 @@ public class ProductService {
         }
     }
 
-    public List<ProductResponse> findByCategoryId(String categoryId) throws NotFoundException {
+    public List<Product> findByCategoryId(String categoryId) throws NotFoundException {
         List<Product> fetchedProducts = productRepository.findByCategoryId(Long.valueOf(categoryId));
         if (fetchedProducts.isEmpty()) {
             throw new NotFoundException("Nothing founds!");
         } else {
-            return fetchedProducts.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
+            return fetchedProducts;
         }
     }
 
