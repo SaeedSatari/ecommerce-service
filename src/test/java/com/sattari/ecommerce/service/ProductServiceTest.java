@@ -62,13 +62,26 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("fetchProduct when can not find a product with given id then should throws new exception")
-    void fetchProduct_whenCanNotFindAProductWithGivenId_thenShouldThrowsNewException(){
+    void fetchProduct_whenCanNotFindAProductWithGivenId_thenShouldThrowsNewException() {
         assertThrows(Exception.class,
                 () -> productService.fetchProduct("1"));
     }
 
     @Test
-    void findByCategoryId() {
+    @DisplayName("findByCategoryId when find products by category id then should returns list of the products")
+    void findByCategoryId_whenFindProductsByCategoryId_thenShouldReturnsListOfTheProducts() throws NotFoundException {
+        List<Product> anyProducts = MotherObject.anyProducts();
+        doReturn(anyProducts).when(productRepository).findByCategoryId(anyLong());
+        List<Product> persistedProducts = productService.findByCategoryId("1");
+        assertNotNull(persistedProducts);
+        assertEquals(anyProducts.size(), persistedProducts.size());
+    }
+
+    @Test
+    @DisplayName("findByCategoryId when can not find products by category id then should throws new exception")
+    void findByCategoryId_whenCanNotFindProductsByCategoryId_thenShouldThrowsNewException() {
+        assertThrows(Exception.class,
+                () -> productService.findByCategoryId("1"));
     }
 
     @Test
