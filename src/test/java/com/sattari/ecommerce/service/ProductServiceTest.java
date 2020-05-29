@@ -13,8 +13,10 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(SpringExtension.class)
@@ -49,7 +51,20 @@ class ProductServiceTest {
     }
 
     @Test
-    void fetchProduct() {
+    @DisplayName("fetchProduct when find a product with given id then should returns the product")
+    void fetchProduct_whenFindAProductWithGivenId_thenShouldReturnsTheProduct() throws NotFoundException {
+        Product anyProduct = MotherObject.anyProduct();
+        doReturn(Optional.of(anyProduct)).when(productRepository).findById(anyLong());
+        Product persistedProduct = productService.fetchProduct("1");
+        assertEquals(anyProduct.getName(), persistedProduct.getName());
+        assertEquals(anyProduct.getSku(), persistedProduct.getSku());
+    }
+
+    @Test
+    @DisplayName("fetchProduct when can not find a product with given id then should throws new exception")
+    void fetchProduct_whenCanNotFindAProductWithGivenId_thenShouldThrowsNewException(){
+        assertThrows(Exception.class,
+                () -> productService.fetchProduct("1"));
     }
 
     @Test
