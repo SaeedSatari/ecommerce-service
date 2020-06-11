@@ -1,6 +1,7 @@
 package com.sattari.ecommerce.controller;
 
 import com.sattari.ecommerce.service.ProductService;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,10 +76,24 @@ class ProductControllerIT {
     }
 
     @Test
-    void searchByCategoryId() {
+    @DisplayName("searchByCategoryId when request is valid then returns list of the products")
+    void searchByCategoryId_whenRequestIsValid_thenReturnsListOfProducts() throws Exception {
+        when(productService.findByCategoryId(anyString())).thenReturn(anyProducts());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/search/categoryId")
+                .param("id", "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void searchByKeyword() {
+    @DisplayName("searchByKeyword when request is valid then returns list of the products")
+    void searchByKeyword_whenRequestIsValid_thenReturnsListOfProducts() throws Exception {
+        when(productService.findByKeyword(anyString())).thenReturn(anyProducts());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/search/keyword")
+                .param("name", "Java")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
     }
 }
