@@ -1,7 +1,6 @@
 package com.sattari.ecommerce.controller;
 
 import com.sattari.ecommerce.service.ProductService;
-import javassist.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
