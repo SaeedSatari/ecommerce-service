@@ -1,8 +1,10 @@
 package com.sattari.ecommerce.service.mapper;
 
 import com.sattari.ecommerce.MotherObject;
+import com.sattari.ecommerce.controller.response.ProductCategoryResponse;
 import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.dal.entity.Product;
+import com.sattari.ecommerce.dal.entity.ProductCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +19,12 @@ class ProductMapperTest {
     ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     private Product product;
+    private ProductCategory productCategory;
 
     @BeforeEach
     void setUp() {
         product = MotherObject.anyProduct();
+        productCategory = MotherObject.anyProductCategory();
     }
 
     @Test
@@ -38,5 +42,8 @@ class ProductMapperTest {
 
     @Test
     void productCategoryToProductCategoryResponse() {
+        ProductCategoryResponse categoryResponse = productMapper.productCategoryToProductCategoryResponse(productCategory);
+        assertEquals(productCategory.getCategoryName(), categoryResponse.getCategoryName());
+        assertEquals(productCategory.getId(), categoryResponse.getId());
     }
 }
