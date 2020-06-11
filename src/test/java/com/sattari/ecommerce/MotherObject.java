@@ -32,4 +32,8 @@ public class MotherObject {
     public static List<Product> anyProducts() {
         return Collections.singletonList(anyProduct());
     }
+
+    public static String anyProductId(){
+        return "10";
+    }
 }
