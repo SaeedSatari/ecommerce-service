@@ -1,8 +1,6 @@
 package com.sattari.ecommerce.controller;
 
 import com.sattari.ecommerce.service.ProductService;
-import javassist.NotFoundException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.sattari.ecommerce.MotherObject.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,22 +64,9 @@ class ProductControllerIT {
     }
 
     @Test
-    @DisplayName("getPagedProducts when request is valid but internal error happened then response internal error")
-    @Disabled("Fix the issue")
-    void getPagedProducts_whenRequestIsValidButInternalErrorHappened_thenResponseInternalError() throws Exception {
-        when(productService.fetchProducts()).thenThrow(NotFoundException.class);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/products")
-                .param("page", "1")
-                .param("size", "10")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
-    }
-
-    @Test
     @DisplayName("getProductDetails when request is valid then should returns founded product response")
     void getProductDetails_whenRequestIsValid_thenShouldReturnsFoundedProductResponse() throws Exception {
-        when(productService.fetchProduct("1")).thenReturn(anyProduct());
+        when(productService.fetchProduct(anyString())).thenReturn(anyProduct());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/products/" + anyProductId())
                 .param("productId", "1")
