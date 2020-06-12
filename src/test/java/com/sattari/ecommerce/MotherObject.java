@@ -33,7 +33,15 @@ public class MotherObject {
         return Collections.singletonList(anyProduct());
     }
 
+    public static List<ProductCategory> anyProductCategories(){
+        return Collections.singletonList(anyProductCategory());
+    }
+
     public static String anyProductId(){
         return "10";
+    }
+
+    public static String anyProductCategoryId(){
+        return anyProductId();
     }
 }
