@@ -75,6 +75,17 @@ class ProductControllerIT {
     }
 
     @Test
+    @DisplayName("getProductDetails when request is invalid then response client error")
+    void getProductDetails_whenRequestIsInvalid_thenResponseClientError() throws Exception {
+        when(productService.fetchProduct(anyString())).thenReturn(anyProduct());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products" + anyProductId())
+                .param("productId", "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     @DisplayName("searchByCategoryId when request is valid then returns list of the products")
     void searchByCategoryId_whenRequestIsValid_thenReturnsListOfProducts() throws Exception {
         when(productService.findByCategoryId(anyString())).thenReturn(anyProducts());
@@ -86,6 +97,17 @@ class ProductControllerIT {
     }
 
     @Test
+    @DisplayName("searchByCategoryId when request is invalid then response client error")
+    void searchByCategoryId_whenRequestIsInvalid_thenResponseClientError() throws Exception {
+        when(productService.findByCategoryId(anyString())).thenReturn(anyProducts());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/search/categoryIds")
+                .param("id", "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     @DisplayName("searchByKeyword when request is valid then returns list of the products")
     void searchByKeyword_whenRequestIsValid_thenReturnsListOfProducts() throws Exception {
         when(productService.findByKeyword(anyString())).thenReturn(anyProducts());
@@ -94,5 +116,16 @@ class ProductControllerIT {
                 .param("name", "Java")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    @DisplayName("searchByKeyword when request is invalid then response client error")
+    void searchByKeyword_whenRequestIsInvalid_thenResponseClientError() throws Exception {
+        when(productService.findByKeyword(anyString())).thenReturn(anyProducts());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/products/search/keywords")
+                .param("name", "Java")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
     }
 }
