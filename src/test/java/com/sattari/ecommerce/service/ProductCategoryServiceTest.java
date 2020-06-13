@@ -58,7 +58,8 @@ class ProductCategoryServiceTest {
     }
 
     @Test
-    void fetchProductCategory() {
+    @DisplayName("fetchProductCategory when can not find a product category with given id then should throws EntityNotFoundException")
+    void fetchProductCategory_whenCanNotFindAProductCategoryWithGivenId_thenShouldThrowsEntityNotFoundException() {
         assertThrows(EntityNotFoundException.class,
                 () -> categoryService.fetchProductCategory("1"));
     }
