@@ -6,12 +6,14 @@ import com.sattari.ecommerce.controller.response.ProductResponse;
 import com.sattari.ecommerce.dal.entity.Product;
 import com.sattari.ecommerce.dal.entity.ProductCategory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(SpringExtension.class)
 class ProductMapperTest {
@@ -45,5 +47,19 @@ class ProductMapperTest {
         ProductCategoryResponse categoryResponse = productMapper.productCategoryToProductCategoryResponse(productCategory);
         assertEquals(productCategory.getCategoryName(), categoryResponse.getCategoryName());
         assertEquals(productCategory.getId(), categoryResponse.getId());
+    }
+
+    @Test
+    @DisplayName("productToProductResponse when given product is null then product response is null")
+    void productToProductResponse_whenGivenProductIsNull_thenProductResponseIsNull() {
+        ProductResponse productResponse = productMapper.productToProductResponse(null);
+        assertNull(productResponse);
+    }
+
+    @Test
+    @DisplayName("productCategoryToProductCategoryResponse when given category is null then category response is null")
+    void productCategoryToProductCategoryResponse_whenGivenCategoryIsNull_thenCategoryResponseIsNull() {
+        ProductCategoryResponse categoryResponse = productMapper.productCategoryToProductCategoryResponse(null);
+        assertNull(categoryResponse);
     }
 }
