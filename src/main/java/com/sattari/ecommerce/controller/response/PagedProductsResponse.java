@@ -1,9 +1,8 @@
 package com.sattari.ecommerce.controller.response;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 /**
  * @author Saeed Sattari
@@ -11,6 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class PagedProductsResponse {
-    private List<ProductResponse> products;
-    private PageResponse page;
+  private List<ProductResponse> products;
+  private PageResponse page;
 }

@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
  * @author Saeed Sattari
  */
 @Repository
-public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
-}
+public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {}

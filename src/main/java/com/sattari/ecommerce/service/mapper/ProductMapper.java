@@ -13,18 +13,20 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
+  ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
-    @Mapping(target = "sku", source = "source.sku")
-    @Mapping(target = "name", source = "source.name")
-    @Mapping(target = "description", source = "source.description")
-    @Mapping(target = "unitPrice", source = "source.unitPrice")
-    @Mapping(target = "unitsInStock", source = "source.unitsInStock")
-    @Mapping(target = "imageUrl", source = "source.imageUrl")
-    @Mapping(target = "categoryName", source = "source.category.categoryName")
-    ProductResponse productToProductResponse(Product source);
+  @Mapping(target = "sku", source = "source.sku")
+  @Mapping(target = "name", source = "source.name")
+  @Mapping(target = "description", source = "source.description")
+  @Mapping(target = "unitPrice", source = "source.unitPrice")
+  @Mapping(target = "unitsInStock", source = "source.unitsInStock")
+  @Mapping(target = "imageUrl", source = "source.imageUrl")
+  @Mapping(target = "categoryName", source = "source.category.categoryName")
+  ProductResponse productToProductResponse(Product source);
 
-    @Mapping(target = "id", source = "source.id")
-    @Mapping(target = "categoryName", source = "source.categoryName")
-    ProductCategoryResponse productCategoryToProductCategoryResponse(ProductCategory source);
+  @Mapping(target = "id", source = "source.id")
+  @Mapping(target = "categoryName", source = "source.categoryName")
+  ProductCategoryResponse productCategoryToProductCategoryResponse(
+    ProductCategory source
+  );
 }

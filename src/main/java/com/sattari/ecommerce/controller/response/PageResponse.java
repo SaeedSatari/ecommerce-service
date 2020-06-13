@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PageResponse {
-    private int size;
-    private long totalElements;
-    private int totalPages;
-    private int number;
+  private int size;
+  private long totalElements;
+  private int totalPages;
+  private int number;
 }
