@@ -1,8 +1,8 @@
 package com.sattari.ecommerce.service;
 
+import com.sattari.ecommerce.commons.exceptions.EntityNotFoundException;
 import com.sattari.ecommerce.dal.entity.ProductCategory;
 import com.sattari.ecommerce.dal.repository.ProductCategoryRepository;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,21 +20,21 @@ public class ProductCategoryService {
         this.productCategoryRepository = productCategoryRepository;
     }
 
-    public List<ProductCategory> fetchProductCategories() throws NotFoundException {
+    public List<ProductCategory> fetchProductCategories() {
         List<ProductCategory> fetchedCategories = productCategoryRepository.findAll();
         if (fetchedCategories.isEmpty()) {
-            throw new NotFoundException("Nothing founds!");
+            throw new EntityNotFoundException(ProductCategory.class);
         } else {
             return fetchedCategories;
         }
     }
 
-    public ProductCategory fetchProductCategory(String categoryId) throws NotFoundException {
+    public ProductCategory fetchProductCategory(String categoryId) {
         Optional<ProductCategory> optionalCategory = productCategoryRepository.findById(Long.valueOf(categoryId));
         if (optionalCategory.isPresent()) {
             return optionalCategory.get();
         } else {
-            throw new NotFoundException("Nothing found for " + categoryId + " id!");
+            throw new EntityNotFoundException(ProductCategory.class, "categoryId", categoryId);
         }
     }
 }

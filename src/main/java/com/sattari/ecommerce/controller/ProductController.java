@@ -32,7 +32,7 @@ public class ProductController {
 
     @GetMapping
     public PagedProductsResponse getPagedProducts(@RequestParam int page,
-                                                  @RequestParam int size) throws NotFoundException {
+                                                  @RequestParam int size) {
         PagedProductsResponse response = new PagedProductsResponse();
         Pageable paging = PageRequest.of(page, size);
         List<Product> products = productService.fetchProducts();
@@ -52,19 +52,19 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductResponse getProductDetails(@PathVariable String productId) throws NotFoundException {
+    public ProductResponse getProductDetails(@PathVariable String productId) {
         Product product = productService.fetchProduct(productId);
         return ProductMapper.MAPPER.productToProductResponse(product);
     }
 
     @GetMapping("/search/categoryId")
-    public List<ProductResponse> searchByCategoryId(@RequestParam String id) throws NotFoundException {
+    public List<ProductResponse> searchByCategoryId(@RequestParam String id){
         List<Product> products = productService.findByCategoryId(id);
         return products.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
     }
 
     @GetMapping("/search/keyword")
-    public List<ProductResponse> searchByKeyword(@RequestParam("name") String name) throws NotFoundException {
+    public List<ProductResponse> searchByKeyword(@RequestParam("name") String name){
         List<Product> products = productService.findByKeyword(name);
         return products.stream().map(ProductMapper.MAPPER::productToProductResponse).collect(Collectors.toList());
     }
