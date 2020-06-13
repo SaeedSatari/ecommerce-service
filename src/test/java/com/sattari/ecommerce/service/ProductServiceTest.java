@@ -35,7 +35,8 @@ class ProductServiceTest {
         doReturn(anyProducts).when(productRepository).findAll();
         List<Product> persistedProducts = productService.fetchProducts();
         assertNotNull(persistedProducts);
-        assertEquals(anyProducts.size(), persistedProducts.size());
+        assertTrue(anyProducts.containsAll(persistedProducts) && persistedProducts.containsAll(anyProducts));
+
     }
 
     @Test
@@ -93,6 +94,6 @@ class ProductServiceTest {
     @DisplayName("findByKeyword when can not find products by keyword then should throws EntityNotFoundException")
     void findByKeyword_whenCanNotFindProductsByKeyword_thenShouldThrowsEntityNotFoundException() {
         assertThrows(EntityNotFoundException.class,
-                () -> productService.findByKeyword("Dummy"));
+                () -> productService.findByKeyword(anyString()));
     }
 }
