@@ -46,8 +46,6 @@ class ProductCategoryControllerIT {
     @Test
     @DisplayName("getProductCategories when request is invalid then response client error")
     void getProductCategories_whenRequestIsInvalid_thenResponseClientError() throws Exception {
-        when(service.fetchProductCategories()).thenReturn(anyProductCategories());
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product-categorie")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
@@ -67,8 +65,6 @@ class ProductCategoryControllerIT {
     @Test
     @DisplayName("getProductCategory when request is invalid then response client error")
     void getProductCategory_whenRequestIsInvalid_thenResponseClientError() throws Exception {
-        when(service.fetchProductCategory(anyString())).thenReturn(anyProductCategory());
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product-categories" + anyProductCategoryId())
                 .param("categoryId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
