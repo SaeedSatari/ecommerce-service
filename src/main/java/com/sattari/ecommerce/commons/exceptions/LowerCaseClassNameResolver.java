@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 public class LowerCaseClassNameResolver extends TypeIdResolverBase {
 
   @Override
-  public String                     idFromValue(Object value) {
+  public String idFromValue(Object value) {
     return value.getClass().getSimpleName().toLowerCase();
   }
 
@@ -17,11 +17,6 @@ public class LowerCaseClassNameResolver extends TypeIdResolverBase {
 
   @Override
   public JsonTypeInfo.Id getMechanism() {
-    return
-
-
-
-
-            JsonTypeInfo.Id.CUSTOM;
+    return JsonTypeInfo.Id.CUSTOM;
   }
 }
